@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class MemberService {
-//    private final MemberRepository memberRepository = new MemberRepository();
-    /* test와 같은 인스터스 사용하기 위해 바꾸기
+    /*
+     * test와 같은 인스터스 사용하기 위해 바꿔야 한다.
      * 여기에서 레포지토리를 만드는게 아니라 외부에서 만들 수 있게 바꾸기
      */
+//    private final MemberRepository memberRepository = new MemberRepository();
     private final MemberRepository memberRepository;
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -24,14 +25,15 @@ public class MemberService {
         result.ifPresent(m -> {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         });*/
+
         // 중복회원 검증
-        // ctrl + alt + m: extract method 단축키
-        validateDuplicateMember(member);
+        validateDuplicateMember(member); // ctrl + alt + m: extract method 단축키, validateDuplicateMember 생성
 
         memberRepository.save(member);
         return member.getId();
     }
 
+    // 중복회원 검증
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
                         .ifPresent(m-> {

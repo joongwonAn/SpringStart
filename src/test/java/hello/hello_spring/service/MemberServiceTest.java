@@ -9,18 +9,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-
+// ctrl + shift + t: test 코드 생성 단축키
 class MemberServiceTest {
-    /*MemberService memberService = new MemberService();
-    MemoryMemberRepository memberRepository = new MemoryMemberRepository();*/
-    /* MemberService의 MemoryMemberRepository와 TestCase에서 만든 MemoryMemberRepository가 서로 다른 인스턴스인 것이 문제
+    /*
+     * MemberService의 MemoryMemberRepository와 TestCase에서 만든 MemoryMemberRepository가 서로 다른 인스턴스인 것이 문제
      * 같은 인스턴스로 test하는 것이 옳다.
      * MemberService와 MemberServiceTest 모두 수정하기
      */
 
+    /*MemberService memberService = new MemberService();
+   MemoryMemberRepository memberRepository = new MemoryMemberRepository();*/
     MemberService memberService;
     MemoryMemberRepository memberRepository;
 
+    /* @BeforeEach
+     * 각 테스트 실행 전에 호출됨
+     * 테스트가 서로 영향이 없도록 항상 새로운 객체를 생성하고, 의존관계도 맺어줌
+     */
     @BeforeEach
     public void beforeEach() {
         memberRepository = new MemoryMemberRepository();
@@ -45,7 +50,7 @@ class MemberServiceTest {
         Assertions.assertThat(member.getName()).isEqualTo(findMember.getName());
     }
 
-    /* 아래와 같이 해도 되지만, try-catch로 묶기 좀 번잡....*/
+    // 아래와 같이 해도 되지만, try-catch로 묶기 좀 번잡....
     /*@Test
     public void 중복_회원_예외() {
         //given
@@ -66,9 +71,10 @@ class MemberServiceTest {
 
         //then
     }*/
-    /* 새로운 방법*/
+
+    //새로운 방법
     @Test
-    public void 중복_회원_예외() {
+    public void 중복_회원_예외() throws Exception {
         //given
         Member member1 = new Member();
         member1.setName("spring");

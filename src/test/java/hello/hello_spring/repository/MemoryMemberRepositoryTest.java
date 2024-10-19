@@ -8,14 +8,17 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+// test class 이름은 (test할 레포지토리 name + TEST)으로 하는 것이 관례임
 public class MemoryMemberRepositoryTest {
 
     MemoryMemberRepository repository = new MemoryMemberRepository();
 
+    // 테스트를 진행하면서 데이터가 누적되어 오류날 가능성이 있어서 각 테스트마다 clear 진행
     @AfterEach
     public void afterEach() {
         repository.clearStore();
     }
+
     @Test
     public void save() {
         //given
@@ -26,7 +29,8 @@ public class MemoryMemberRepositoryTest {
         repository.save(member);
 
         //then
-        Member result = repository.findById(member.getId()).get();
+        Member result = repository.findById(member.getId()).get(); //get(): Optoinal일 때 값 꺼내는 법
+        // assertThat(actual).isEqualTo(expected)
         assertThat(member).isEqualTo(result);
     }
 
