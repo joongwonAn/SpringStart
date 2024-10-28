@@ -44,7 +44,7 @@ public class MemberController {
         memberService.join(member);
 
         // 홈화면으로 보내기
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     // 회원 컨트롤러에서 조회 기능
